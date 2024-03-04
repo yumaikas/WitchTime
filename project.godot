@@ -20,13 +20,19 @@ _global_script_classes=[ {
 "path": "res://Steppers/GameCore.gd"
 }, {
 "base": "Reference",
+"class": "GameMap",
+"language": "GDScript",
+"path": "res://Map/GameMap.gd"
+}, {
+"base": "Reference",
 "class": "MapRoom",
 "language": "GDScript",
-"path": "res://Steppers/GameRoom.gd"
+"path": "res://Map/GameRoom.gd"
 } ]
 _global_script_class_icons={
 "GDForth": "",
 "GameCore": "",
+"GameMap": "",
 "MapRoom": ""
 }
 
