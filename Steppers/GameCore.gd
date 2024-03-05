@@ -50,15 +50,24 @@ func do(name, data):
 	emit_signal("event", data, name)
 
 func _ready():
-	var map = GameMap.new()
-	map.setupBaseMap()
 	vm = GDForth.new(_forth, self)
 
 func can_witch_move(_dir): 
 	return true
 
+var curr_room_changed = false
+var curr_room
+var witch_loc
 func move_witch(dir):
 	witch.pos += dir
+	witch_loc = WorldMap.map.location_of(witch.pos)
+	if curr_room != witch_loc.map:
+		curr_room = witch_loc.map
+		curr_room_changed = true
+		
+
+
+
 	return GDForth.nowait_of("done", null)
 
 class Door extends Reference:

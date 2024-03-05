@@ -11,7 +11,12 @@ func _ready():
 	add_child(game)
 
 func _process(_delta):
-	witch.position = game.witch.pos * 16
+	if game.witch_loc:
+		witch.position = game.witch_loc.room * 16
+	if game.curr_room_changed:
+		WorldMap.map.rooms[game.curr_room].load_bg($Background)
+		game.curr_room_changed = false
+
 
 # Movement
 const intLeft = Vector2(-1,0)

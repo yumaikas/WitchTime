@@ -16,3 +16,9 @@ func pickups(at):
     return items[at]
 func door(at):
     return doors[at]
+
+func load_bg(tileMap: TileMap):
+    tileMap.clear()
+    for k in tiles.keys():
+        print([k, tiles[k]])
+        tileMap.set_cellv(k, tiles[k])

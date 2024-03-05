@@ -42,6 +42,10 @@ config/name="90 . 09. Witch Time"
 run/main_scene="res://Level.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+WorldMap="*res://Map/WorldMap.tscn"
+
 [display]
 
 window/size/width=160
