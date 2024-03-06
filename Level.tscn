@@ -22,6 +22,7 @@ atlas = ExtResource( 2 )
 region = Rect2( 16, 3, 9, 11 )
 
 [node name="BaseLevel" type="Node2D"]
+position = Vector2( 8, 8 )
 script = ExtResource( 3 )
 
 [node name="Background" type="TileMap" parent="."]
@@ -37,6 +38,13 @@ centered = false
 [node name="UI" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="UI"]
+margin_left = -14.0
+margin_top = 168.0
+margin_right = 175.0
+margin_bottom = 340.0
+color = Color( 0.101961, 0.254902, 0.333333, 1 )
 
 [node name="BtnUp" type="TextureButton" parent="UI"]
 margin_left = 24.0

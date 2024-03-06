@@ -9,6 +9,10 @@ var settings
 func _init():
 	pass
 
+func coord_from_room(roomInMap, posInRoom):
+	var rs = settings.room_size
+	return Vector2(roomInMap.x * rs.x, roomInMap.y * rs.y) + posInRoom
+
 func location_of(mapCoord):
 	var rs = settings.room_size
 	var room_coord = Vector2(int(mapCoord.x) / int(rs.x), int(mapCoord.y) / int(rs.y))
@@ -22,7 +26,7 @@ func load_map(bgTiles: TileMap, solids: TileMap, settings: GameMap.Settings):
 
 	for cell in bgTiles.get_used_cells():
 		var coords = location_of(cell)
-		var id = solids.get_cellv(cell)
+		var id = bgTiles.get_cellv(cell)
 
 		if not loading_rooms.has(coords.map):
 			loading_rooms[coords.map] = MapRoom.new(coords.map)
@@ -39,7 +43,8 @@ func load_map(bgTiles: TileMap, solids: TileMap, settings: GameMap.Settings):
 	rooms = loading_rooms
 
 func can_move(to):
-	return true
+	var coords = location_of(to)
+	return not rooms[coords.map].solids.has(coords.room)
 
 func setupBaseMap():
 	var startRoom = MapRoom.new(Vector2(4,8))

@@ -31,7 +31,7 @@ var _forth = """
 :witch-move [ +scope =dir
 	self &can_witch_move( dir ) 
 		[ self &move_witch( dir ) ~done ] 
-		[ self &nomove_witch() ] 
+		[ self &nomove_witch() ~done ] 
 	if-else
 	:witch tick-domain
 	-scope 
@@ -51,23 +51,27 @@ func do(name, data):
 
 func _ready():
 	vm = GDForth.new(_forth, self)
+	set_witch_pos(Vector2(27,27))
 
-func can_witch_move(_dir): 
-	return true
+func set_witch_pos(to):
+	witch.pos = to
+	witch_loc = WorldMap.map.location_of(witch.pos)
+	if curr_room != witch_loc.map:
+		curr_room = witch_loc.map
+		curr_room_changed = true
+
+func can_witch_move(dir): 
+	return WorldMap.map.can_move(witch.pos + dir)
 
 var curr_room_changed = false
 var curr_room
 var witch_loc
 func move_witch(dir):
-	witch.pos += dir
-	witch_loc = WorldMap.map.location_of(witch.pos)
-	if curr_room != witch_loc.map:
-		curr_room = witch_loc.map
-		curr_room_changed = true
-		
+	set_witch_pos(witch.pos + dir)
 
+	return GDForth.nowait_of("done", null)
 
-
+func nomove_witch():
 	return GDForth.nowait_of("done", null)
 
 class Door extends Reference:

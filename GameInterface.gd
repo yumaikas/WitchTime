@@ -14,9 +14,24 @@ func _process(_delta):
 	if game.witch_loc:
 		witch.position = game.witch_loc.room * 16
 	if game.curr_room_changed:
+		$Background.clear()
 		WorldMap.map.rooms[game.curr_room].load_bg($Background)
-		game.curr_room_changed = false
+		for sk in slices.keys():
+			var slice = slices[sk]
+			for mul in slice.len:
+				var borderPt = slice.offset + (slice.dir * mul)
+				print(mul, borderPt)
+				var anchorPt = WorldMap.map.location_of(WorldMap.map.coord_from_room(game.curr_room, borderPt))
+				if WorldMap.map.rooms.has(anchorPt.map) and WorldMap.map.rooms[anchorPt.map].tiles.has(anchorPt.room):
+					$Background.set_cellv(borderPt, WorldMap.map.rooms[anchorPt.map].tiles[anchorPt.room])
 
+
+var slices = {
+	"topLeftToRight": {"offset": Vector2(-1,-1), "len": 11, "dir": intRight },
+	"rightTopToBottom": {"offset": Vector2(10,-1), "len": 11, "dir": intDown },
+	"bottomRightToLeft": {"offset": Vector2(10,10), "len": 11, "dir": intLeft },
+	"leftBottomToTop": {"offset": Vector2(-1,10), "len": 11, "dir": intUp },
+}
 
 # Movement
 const intLeft = Vector2(-1,0)
